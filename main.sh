@@ -1,7 +1,7 @@
 #!/bin/bash
 export PATH=/usr/local/bin:$PATH
 
-FPATH="/home/saverio/Desktop/P5-widget/"
+FPATH=/home/saverio/Documents/P5-widget/
 PYFILE=$FPATH'get_info.py'
 echo $PYFILE
 info=($(python3 $PYFILE))
@@ -38,3 +38,4 @@ convert -page +0+0 $FPATH'base.*' \
 -background none -layers merge +repage $FPATH'background.jpg'
 
 gsettings set org.gnome.desktop.background picture-uri-dark 'file://'$FPATH'background.jpg'
+
