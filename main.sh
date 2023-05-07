@@ -14,7 +14,7 @@ info_bg=($(identify -format '%w %h' $FPATH'base.*'))
 BG_WIDTH=${info_bg[0]}
 BG_HEIGHT=${info_bg[1]}
 
-if [[ $DAY_N -gt 9 ]];
+if [[ 10#$DAY_N -gt 9 ]];
 then
     DAY_SHIFT=100
     WEATHER_SHIFT=60
@@ -34,7 +34,7 @@ convert -page +$WEATHER_SHIFT+50 $FPATH'Assets/Weather/icons0/'$WEATHER'.png' \
 -background none -layers merge +repage $FPATH'icon.png'
 
 convert -page +0+0 $FPATH'base.*' \
--page +$(($BG_WIDTH-1000))+$(($BG_HEIGHT/20)) $FPATH'icon.png' \
+-page +$(($BG_WIDTH*72/100))+$(($BG_HEIGHT/20)) $FPATH'icon.png' \
 -background none -layers merge +repage $FPATH'background.jpg'
 
 gsettings set org.gnome.desktop.background picture-uri-dark 'file://'$FPATH'background.jpg'
