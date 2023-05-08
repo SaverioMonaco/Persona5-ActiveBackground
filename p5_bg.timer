@@ -1,5 +1,6 @@
 [Unit]
 Description='Persona 5 calendar on the Background'
+After=network.target network-online.target
 
 [Timer]
 OnCalendar=*-*-* 03:00:00

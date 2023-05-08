@@ -33,8 +33,10 @@ convert -page +$WEATHER_SHIFT+50 $FPATH'Assets/Weather/icons0/'$WEATHER'.png' \
 -page +0+$'-20' $FPATH'Assets/ToD/'$TOD'.png' \
 -background none -layers merge +repage $FPATH'icon.png'
 
+convert -trim $FPATH'icon.png' $FPATH'icon.png'
+
 convert -page +0+0 $FPATH'base.*' \
--page +$(($BG_WIDTH*72/100))+$(($BG_HEIGHT/20)) $FPATH'icon.png' \
+-page +$(($BG_WIDTH*75/100))+$(($BG_HEIGHT/10)) $FPATH'icon.png' \
 -background none -layers merge +repage $FPATH'background.jpg'
 
 gsettings set org.gnome.desktop.background picture-uri-dark 'file://'$FPATH'background.jpg'

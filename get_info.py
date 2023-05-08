@@ -6,12 +6,17 @@ import time
 
 this_file_path = os.path.realpath(__file__)
 
-weather_location = open(this_file_path[:-11]+'weather/location.info', "r").read()
-weather_token    = open(this_file_path[:-11]+"weather/token.info", "r").read()
+weather = 'None'
+if os.path.exists(this_file_path[:-11]+'weather/'):
+    weather_location = open(this_file_path[:-11]+'weather/location.info', "r").read()
+    weather_token    = open(this_file_path[:-11]+"weather/token.info", "r").read()
 
-url_weather = f'https://api.openweathermap.org/data/2.5/weather?q={weather_location}&appid={weather_token}&units=metric'.replace('\n','')
-weather = requests.get(url_weather).json()['weather'][0]['main']
-
+    url_weather = f'https://api.openweathermap.org/data/2.5/weather?q={weather_location}&appid={weather_token}&units=metric'.replace('\n','')
+    try:
+        weather = requests.get(url_weather).json()['weather'][0]['main']
+    except:
+        pass
+        
 if weather == 'Thunderstorm':
     weather = 'Rain'
 elif weather == 'Drizzle':
