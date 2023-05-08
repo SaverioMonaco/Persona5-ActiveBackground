@@ -21,6 +21,7 @@ echo "Done!"
 echo "Setting the systemd service..."
 echo "[Unit]
 Description=Persona 5 calendar on the Background
+Requires=xdg-desktop-autostart.target
 
 [Service]
 Type=oneshot
