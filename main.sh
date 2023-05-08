@@ -13,6 +13,9 @@ TOD=${info[3]}
 info_bg=($(identify -format '%w %h' $FPATH'base.*'))
 BG_WIDTH=${info_bg[0]}
 BG_HEIGHT=${info_bg[1]}
+info_ratios=($(cat $FPATH'ratios'))
+RATIO_WIDTH=${info_ratios[0]}
+RATIO_HEIGHT=${info_ratios[1]}
 
 if [[ 10#$DAY_N -gt 9 ]];
 then
@@ -36,7 +39,7 @@ convert -page +$WEATHER_SHIFT+50 $FPATH'Assets/Weather/icons0/'$WEATHER'.png' \
 convert -trim $FPATH'icon.png' $FPATH'icon.png'
 
 convert -page +0+0 $FPATH'base.*' \
--page +$(($BG_WIDTH*75/100))+$(($BG_HEIGHT/10)) $FPATH'icon.png' \
+-page +$(($BG_WIDTH*$RATIO_WIDTH))+$(($BG_HEIGHT*$RATIO_HEIGHT)) $FPATH'icon.png' \
 -background none -layers merge +repage $FPATH'background.jpg'
 
 gsettings set org.gnome.desktop.background picture-uri-dark 'file://'$FPATH'background.jpg'
