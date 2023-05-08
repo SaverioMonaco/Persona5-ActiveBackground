@@ -1,4 +1,4 @@
-# Persona 5 Background with Calendar
+# Persona 5 Background with Calendar (Ubuntu)
 This code automatically updates a background image with the sprites from Persona 5 displaying the current date and Weather!
 
 ![ilmioschermo](./Assets/readme/mydesktop.png)
