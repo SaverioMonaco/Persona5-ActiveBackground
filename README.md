@@ -1,5 +1,5 @@
 # Persona 5 Background with Calendar
-This code automatically updates a background image with the sprites from Persona 5 displaying the currant date and Weather!
+This code automatically updates a background image with the sprites from Persona 5 displaying the current date and Weather!
 
 ![prova](./Assets/readme/mydesktop.png)
 
