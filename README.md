@@ -34,8 +34,12 @@ chmod +x ./install.sh
 ## FAQ:
 1. **I want to change the base image**
     Just substitute the `base.*` file with your desired image.
+    Use the script `./refresh` to switch between wallpapers.
 2. **The assets is not placed where I would like**
     Different `base.*` images or screen resolution can mess with the placement of the asset, you can tweak the values in `ratios` to see which are the most fitting ones.
 3. **How often does this code run?**
    1. At every startup after the computer is connected to the Network
-   2. At 3AM, 9AM, 1PM, 4PM, 7PM and Midnight to update the Calendar
+   2. After every suspend
+   3. ~~At 3AM, 9AM, 1PM, 4PM, 7PM and Midnight to update the Calendar~~ Every hour, to update the weather and to cover weird unpredicted scenarios.
+
+   However if no change in the Wallpaper needs to be applied, the program will run softly not refreshing the same wallpaper.
