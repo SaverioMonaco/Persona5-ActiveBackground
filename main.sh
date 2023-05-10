@@ -7,7 +7,7 @@ info=($(python3 $PYFILE))
 last_run_info=($(cat $FPATH'lastinfo'))
 A=${info[@]};
 B=${last_run_info[@]};
-if [ "$A" = "$B" ] ; then
+if [ "$A" != "$B" ] ; then
     echo ${info[0]} ${info[1]} ${info[2]} ${info[3]} ${info[4]} > $FPATH'lastinfo'
     MONTH=${info[1]}
     DAY_N=${info[0]}
