@@ -27,16 +27,16 @@ chmod +x ./install.sh
 ## What does this code do?
 1. Combines the asset sprites into a single one with the correct Month, Day, Week, Time of the day and (eventually) Weather
    1. (If it cannot retrieve the Weather for any reason, no weather information will be shown) 
-2. Place the combined sprites on top of the `base.*` image in the `Persona5-ActiveBackground` folder
+2. Place the combined sprites on top of the `base./*` images.
    1. (Tip: You can change the base image!)
 3. Updates the Background with the new one (in `background.jpg`) containing both the base background and the Assets from Persona 5
 
 ## FAQ:
 1. **I want to change the base image**
-    Just substitute the `base.*` file with your desired image.
+    Just place your desired image as `Persona5-ActiveBackground/base.*`.
     Use the script `./refresh` to switch between wallpapers.
 2. **The assets is not placed where I would like**
-    Different `base.*` images or screen resolution can mess with the placement of the asset, you can tweak the values in `ratios` to see which are the most fitting ones.
+    Different images or screen resolution can mess with the placement of the asset, you can tweak the values in `ratios` to see which are the most fitting ones.
 3. **How often does this code run?**
    1. At every startup after the computer is connected to the Network
    2. After every suspend
