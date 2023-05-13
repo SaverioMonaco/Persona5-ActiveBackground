@@ -6,8 +6,8 @@ read location
 echo "Enter your OpenWeatherMap API Key (Get one for free here: https://openweathermap.org/price)"
 read token
 
-#echo $location > weather/location.info
-#echo $token > weather/token.info
+echo $location > weather/location.info
+echo $token > weather/token.info
 
 echo "Weather information set!"
 echo "Running the script once..."
@@ -22,7 +22,7 @@ Description=Persona 5 calendar on the Background
 [Service]
 Type=oneshot
 User=$(whoami)
-ExecStart=python \"$(pwd)/makebg.py\"
+ExecStart=/usr/bin/python3 \"$(pwd)/makebg.py\"
 
 [Install]
 WantedBy=multi-user.target" > ./p5_bg.service

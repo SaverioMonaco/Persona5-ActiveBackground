@@ -26,19 +26,21 @@ icon_newsize = 0.2          # percent of background picture horizontal size
 
 class assets:
     # define assets files
-    WEATHER   = path+'/Assets/Weather/{}.png'
-    DAY       = path+'/Assets/Day/{}.png'
-    DAY_TOP   = path+'/Assets/Day/{}Top.png'
-    WEEK      = path+'/Assets/Week/{}.png'
-    WEEK_TOP  = path+'/Assets/Week/{}Top.png'
-    MONTH     = path+'/Assets/Month/{}.png'
-    MONTH_TOP = path+'/Assets/Month/{}Top.png'
-    TOP       = path+'/Assets/ToD/{}.png'
+    WEATHER      = path+'/Assets/Weather/{}.png'
+    DAY_BOTTOM   = path+'/Assets/Day/{}Bottom.png'
+    DAY          = path+'/Assets/Day/{}.png'
+    DAY_TOP      = path+'/Assets/Day/{}Top.png'
+    WEEK         = path+'/Assets/Week/{}.png'
+    WEEK_TOP     = path+'/Assets/Week/{}Top.png'
+    MONTH_BOTTOM = path+'/Assets/Month/{}Bottom.png'
+    MONTH        = path+'/Assets/Month/{}.png'
+    MONTH_TOP    = path+'/Assets/Month/{}Top.png'
+    TOD          = path+'/Assets/ToD/{}.png'
 
 
 def get_weather_identifier():
     """Request weather info to openweathermap. Handles request errors, returning 'None'."""
-    weather = 'None'  # default return value if weather request fails
+    weather = get_pred_identifier()[-1] # return previous weather if next lines of code fail
 
     if os.path.exists( path + '/weather/'):
         weather_location = open( path + '/weather/location.info', "r").read()
@@ -94,17 +96,22 @@ def get_time_identifier():
         BG='sunset'
     else:
         BG='night'  
-        if week > 5:
-            BG='night_alt'
+        if week == 5:
+            BG = 'night_saturday'
+        elif week == 6:
+            BG = 'night_sunday'
 
     return day, month, weekdays[week], TOD, BG
 
 def get_pred_identifier():
-    with open(path+'/lastinfo', 'r') as file:
-        reader = csv.reader(file)
-        # We only need to read the first row
-        for row in reader:
-            return tuple(row)
+    try:
+        with open(path+'/lastinfo', 'r') as file:
+            reader = csv.reader(file)
+            # We only need to read the first row
+            for row in reader:
+                return tuple(row)
+    except:
+        return (0, 0, 0, 0, 0, 0)
 
 def write_to_lastinfo(list):
     with open(path+'/lastinfo', 'w', newline='') as file:
@@ -115,15 +122,17 @@ def make_icon_composition(DAY_N, MONTH, DAY_W, TOD, WEATHER = 'None', DAY_SHIFT 
     """Compose the Persona-style icon with the given parameters."""
 
     composition = Image.new('RGBA', (900, 653))  # this is determined by assets files
+    composition.alpha_composite( Image.open(assets.DAY_BOTTOM.format(DAY_N)), (DAY_SHIFT,70))
+    composition.alpha_composite( Image.open(assets.MONTH_BOTTOM.format(MONTH)), (30,50))
+    composition.alpha_composite( Image.open(assets.WEEK.format(DAY_W)), (100,100))
     if WEATHER != 'None':
         composition.alpha_composite( Image.open(assets.WEATHER.format(WEATHER)), (WEATHER_SHIFT,50))
     composition.alpha_composite( Image.open(assets.DAY.format(DAY_N)), (DAY_SHIFT,70))
     composition.alpha_composite( Image.open(assets.MONTH.format(MONTH)), (30,50))
-    composition.alpha_composite( Image.open(assets.WEEK.format(DAY_W)), (100,100))
     composition.alpha_composite( Image.open(assets.MONTH_TOP.format(MONTH)), (30,50))
     composition.alpha_composite( Image.open(assets.DAY_TOP.format(DAY_N)), (DAY_SHIFT,70))
     composition.alpha_composite( Image.open(assets.WEEK_TOP.format(DAY_W)), (100,100))
-    composition.alpha_composite( Image.open(assets.TOP.format(TOD)), (0,-20))
+    composition.alpha_composite( Image.open(assets.TOD.format(TOD)), (0,-20))
     return composition
 
 
@@ -167,7 +176,9 @@ if anychanges:
     # merge background with icon
     background.paste(icon_resized, (int(bgw*icon_offset[0]), int(bgl*icon_offset[1])), icon_resized)
     if WEATHER != 'Clear':
-        CLOUDS_PATHS = [path+f'/bases/clouds/{BG}/cloud{i+1}.png' for i in range(3)]
+        CBG = 'night' if BG[:5] == 'night' else 'day'
+        
+        CLOUDS_PATHS = [path+f'/bases/clouds/{CBG}/cloud{i+1}.png' for i in range(3)]
         XS, YS = [.1, .4, .65], [.5, .05, .05]
         for i, CLOUD_PATH in enumerate(CLOUDS_PATHS):
             CLOUD = Image.open( CLOUD_PATH ).convert("RGBA")
@@ -176,3 +187,7 @@ if anychanges:
 
     if bgfile_out is not None:
         background.save( bgfile_out )
+
+    bashcommand = f'gsettings set org.gnome.desktop.background picture-uri-dark \'file://{path}/background.jpg\''
+    os.system(bashcommand) 
+
