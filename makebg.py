@@ -88,11 +88,11 @@ def get_time_identifier():
     else:
         TOD = '4'
 
-    if hour >= 4 and hour < 8:
+    if hour >= 5 and hour < 8:
         BG='sunrise'
     elif hour >= 8 and hour < 18:
         BG='day'
-    elif hour >= 18 and hour < 20:
+    elif hour >= 18 and hour < 21:
         BG='sunset'
     else:
         BG='night'  
@@ -147,7 +147,7 @@ PRED_DAY_N, PRED_MONTH, PRED_DAY_W, PRED_TOD, PRED_BG, PRED_WEATHER = get_pred_i
 
 #  if anychanges = True, this execution is no different than the previous and the code can end here
 #  if false, we need to update the wallpaper
-anychanges = not ( [DAY_N, MONTH, DAY_W, TOD, BG, WEATHER] == [PRED_DAY_N, PRED_MONTH, PRED_DAY_W, PRED_TOD, PRED_BG, WEATHER] )
+anychanges = not ( [DAY_N, MONTH, DAY_W, TOD, BG, WEATHER] == [PRED_DAY_N, PRED_MONTH, PRED_DAY_W, PRED_TOD, PRED_BG, PRED_WEATHER] )
 
 if anychanges:
     write_to_lastinfo([DAY_N, MONTH, DAY_W, TOD, BG, WEATHER])
